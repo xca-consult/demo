@@ -18,7 +18,6 @@ phases:
     post_build:
         commands:
             - dotnet publish -c Release -r linux-x64 -o ./build_output AWSDemo/AWSDemo.csproj
-            - cp Procfile ./build_output
     
 artifacts:
     files:
