@@ -6,7 +6,8 @@ phases:
             dotnet: 3.1
 
     pre_build:
-        - dotnet restore
+        commands:
+            - dotnet restore
 
     build:
         commands:
