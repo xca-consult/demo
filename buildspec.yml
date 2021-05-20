@@ -4,11 +4,26 @@ phases:
     install:
         runtime-versions:
             dotnet: 3.1
+
+    pre_build:
+        - dotnet restore
+
     build:
         commands:
             - dotnet build -c Release ./AWSDemo/AWSDemo.csproj
             - dotnet test -c Release ./AWSDemoTests/AWSDemoTests.csproj --logger trx --results-directory ./testresults
             - dotnet publish -c release -o ./build_output AWSDemo/AWSDemo.csproj
+            
+    post_build:
+        commands:
+            - dotnet publish -c Release -r linux-x64 -o ./build_output AWSDemo/AWSDemo.csproj
+            - cp Procfile ./build_output
+    
+artifacts:
+    files:
+        - '**/*'
+    base-directory: ./build_output
+    discard-paths: no
     
 reports:
     DotnetTestExamples:
@@ -16,7 +31,3 @@ reports:
         files:
             - '**/*'
         base-directory: './testresults'
-        
-artifacts:
-    files:
-        - AWSDemo/build_output/**/*
