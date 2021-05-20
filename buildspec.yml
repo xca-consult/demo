@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+    install:
+        runtime-versions:
+            dotnet: 3.1
+    build:
+        commands:
+            - dotnet build -c Release ./AWSDemo/AWSDemo.csproj
+            - dotnet test -c Release ./AWSDemoTests/AWSDemoTests.csproj --logger trx --results-directory ./testresults
+reports:
+    DotnetTestExamples:
+        file-format: VisualStudioTrx
+        files:
+            - '**/*'
+        base-directory: './testresults'
